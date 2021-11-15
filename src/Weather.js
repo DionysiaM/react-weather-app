@@ -6,6 +6,7 @@ import axios from "axios";
 export default function Weather() {
   const [ready, setReady] = useState(false);
   const [temperature, setTemperature] = useState(null);
+
   function handleResponse(response) {
     console.log(response.data);
     setTemperature(response.data.main.temp);
@@ -39,19 +40,15 @@ export default function Weather() {
           <li>Sunday 12:14</li>
           <li>Mostly Cloudy</li>
         </ul>
-        <div className="row mt-3">
+        <div className="row mt-5">
           <div className="col-6">
-            <div className="clearfix">
-              <img
-                src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png"
-                alt="Mostly Cloudy"
-                className="float-left"
-              />
-              <div className="float-left">
-                <span className="temperature">{Math.round(temperature)} </span>
-                <span className="unit">℃</span>
-              </div>
-            </div>
+            <img
+              src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png"
+              alt="Mostly Cloudy"
+            />
+
+            <span className="temperature">{Math.round(temperature)} </span>
+            <span className="unit">℃</span>
           </div>
           <div className="col-6">
             <ul>
@@ -66,7 +63,7 @@ export default function Weather() {
   } else {
     const apiKey = "8e47eb2a9db2f234f7a0f457faa90ade";
     let city = "Copenhagen";
-    let apiUrl = `http://api.openweathermap.org/data/2.5/forecast/hourly?q=${city}&appid=${apiKey}&untits=metric`;
+    let apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(handleResponse);
 
     return "Loading...";
