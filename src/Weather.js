@@ -5,11 +5,17 @@ import axios from "axios";
 
 export default function Weather() {
   const [ready, setReady] = useState(false);
-  const [temperature, setTemperature] = useState(null);
-
+  const [weatherData, setWeatherData] = useState([]);
   function handleResponse(response) {
     console.log(response.data);
-    setTemperature(response.data.main.temp);
+    setWeatherData({
+      temperature: response.data.main.temp,
+      humidity: response.data.main.humidity,
+      wind: response.data.wind.speed,
+      city: response.data.name,
+      description: response.data.weather[0].description,
+      iconUrl: "https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png",
+    });
     setReady(true);
   }
 
@@ -35,26 +41,24 @@ export default function Weather() {
             </div>
           </div>
         </form>
-        <h1>Copenhagen</h1>
+        <h1>{weatherData.city} </h1>
         <ul>
           <li>Sunday 12:14</li>
-          <li>Mostly Cloudy</li>
+          <li>{weatherData.description} </li>
         </ul>
         <div className="row mt-5">
           <div className="col-6">
-            <img
-              src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png"
-              alt="Mostly Cloudy"
-            />
+            <img src={weatherData.iconUrl} alt={weatherData.description} />
 
-            <span className="temperature">{Math.round(temperature)} </span>
+            <span className="temperature">
+              {Math.round(weatherData.temperature)}{" "}
+            </span>
             <span className="unit">℃</span>
           </div>
           <div className="col-6">
             <ul>
-              <li>Precipitation: 18%</li>
-              <li>Humidity: 72%</li>
-              <li>Wind: 13km/h</li>
+              <li>Humidity:{weatherData.humidity} %</li>
+              <li>Wind: {weatherData.wind} km/h</li>
             </ul>
           </div>
         </div>
