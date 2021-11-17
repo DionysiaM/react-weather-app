@@ -4,22 +4,21 @@ import "./index.css";
 import axios from "axios";
 
 export default function Weather() {
-  const [ready, setReady] = useState(false);
-  const [weatherData, setWeatherData] = useState([]);
+  const [weatherData, setWeatherData] = useState({ ready: false });
   function handleResponse(response) {
-    console.log(response.data);
     setWeatherData({
+      ready: true,
       temperature: response.data.main.temp,
+      date: "Wednesday 7:00",
       humidity: response.data.main.humidity,
       wind: response.data.wind.speed,
       city: response.data.name,
       description: response.data.weather[0].description,
-      iconUrl: "https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png",
+      iconUrl: "https://ssl.gstatic.com/onebox/weather/64/cloudy.png",
     });
-    setReady(true);
   }
 
-  if (ready) {
+  if (weatherData.ready) {
     return (
       <div className="Weather">
         <form>
@@ -43,8 +42,8 @@ export default function Weather() {
         </form>
         <h1>{weatherData.city} </h1>
         <ul>
-          <li>Sunday 12:14</li>
-          <li>{weatherData.description} </li>
+          <li>{weatherData.date} </li>
+          <li className="text-capitalize"> {weatherData.description} </li>
         </ul>
         <div className="row mt-5">
           <div className="col-6">
@@ -57,15 +56,15 @@ export default function Weather() {
           </div>
           <div className="col-6">
             <ul>
-              <li>Humidity:{weatherData.humidity} %</li>
-              <li>Wind: {weatherData.wind} km/h</li>
+              <li>Humidity:{weatherData.humidity}%</li>
+              <li>Wind:{weatherData.wind}km/h</li>
             </ul>
           </div>
         </div>
       </div>
     );
   } else {
-    const apiKey = "8e47eb2a9db2f234f7a0f457faa90ade";
+    const apiKey = "293f64100f990f0f471f76f8c331c1c9";
     let city = "Copenhagen";
     let apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(handleResponse);
