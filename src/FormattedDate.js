@@ -12,7 +12,9 @@ export default function FormattedDate(props) {
   ];
   let day = days[props.date.getDay()];
   let hours = props.date.getHours();
+
   if (hours < 10) {
+    // eslint-disable-next-line
     hours = `0${minutes}`;
   }
 
