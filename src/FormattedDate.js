@@ -12,19 +12,18 @@ export default function FormattedDate(props) {
   ];
   let day = days[props.date.getDay()];
   let hours = props.date.getHours();
-
-  if (hours < 10) {
-    // eslint-disable-next-line
-    hours = `0${minutes}`;
-  }
-
   let minutes = props.date.getMinutes();
   if (minutes < 10) {
     minutes = `0${minutes}`;
   }
+
+  if (hours > 10) {
+    hours = `0${minutes}`;
+  }
+
   return (
     <div>
-      {day} {hours}:{minutes}
+      {day} {""} {hours}:{minutes}
     </div>
   );
 }
